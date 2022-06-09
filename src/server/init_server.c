@@ -15,8 +15,7 @@ server_t *init_server(char *ip_addr, int port)
     server->port = port;
 
     // init socket
-    int socketS;
-    socketS = socket(AF_INET, SOCK_STREAM, 0);
+    server->socket = socket(AF_INET, SOCK_STREAM, 0);
     struct sockaddr_in addrServer;
     socklen_t amn = sizeof(addrServer);
     // init server addr
@@ -25,7 +24,12 @@ server_t *init_server(char *ip_addr, int port)
     addr_server.sin_port = htons(port);
     addr_server.sin_addr.s_addr = inet_addr(ip_addr);
     // bind
+    bind(server->socket, (struct sockaddr *)&addrServer, sizeof(addr_server));
     // listen
+    listen(server->socket, 10);
+    fd_set fds;
+    fd_set rfds;
+    fd_set wfds;
 
     return server;
 }
