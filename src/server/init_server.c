@@ -15,7 +15,15 @@ server_t *init_server(char *ip_addr, int port)
     server->port = port;
 
     // init socket
+    int socketS;
+    socketS = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in addrServer;
+    socklen_t amn = sizeof(addrServer);
     // init server addr
+    struct sockaddr_in addr_server;
+    addr_server.sin_family = AF_INET;
+    addr_server.sin_port = htons(port);
+    addr_server.sin_addr.s_addr = inet_addr(ip_addr);
     // bind
     // listen
 
